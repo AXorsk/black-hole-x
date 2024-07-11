@@ -15,8 +15,10 @@ export default class Spaceship
         this.camera = this.experience.camera
 
         this.group = new THREE.Group()
+        this.group.position.x = 0
         this.group.position.y = 1
-        this.group.scale.set(0.1, 0.1, 0.1)
+        this.group.position.z = 5
+        this.group.scale.set(0.1, 0.1, 0.1) // 0.01 0.01 0.01
         this.scenes.overlay.add(this.group)
 
         
@@ -28,6 +30,7 @@ export default class Spaceship
 
         this.setDirectionalLight()
         this.setCursor()
+        this.setPosition()
         this.setView()
     }
 
@@ -127,6 +130,15 @@ export default class Spaceship
         this.cursor.normalisedX = 0
         this.cursor.normalisedY = 0
 
+        window.addEventListener('touchstart', (_event) =>
+            {
+                this.cursor.x = _event.touches[0].clientX
+                this.cursor.y = _event.touches[0].clientY
+                
+                this.cursor.normalisedX = this.cursor.x / this.sizes.width - 0.5
+                this.cursor.normalisedY = this.cursor.y / this.sizes.height - 0.5
+            })
+
         window.addEventListener('mousemove', (_event) =>
         {
             this.cursor.x = _event.clientX
@@ -134,6 +146,35 @@ export default class Spaceship
             
             this.cursor.normalisedX = this.cursor.x / this.sizes.width - 0.5
             this.cursor.normalisedY = this.cursor.y / this.sizes.height - 0.5
+        })
+    }
+
+    setPosition()
+    {
+        window.addEventListener('keypress', (_event) =>
+        {
+            var step = 0.01
+            switch(_event.key)
+            {
+                case 'w':
+                    this.group.position.y += step
+                    break
+                case 's':
+                    this.group.position.y -= step
+                    break
+                case 'a':
+                    this.group.position.x -= step
+                    break
+                case 'd':
+                    this.group.position.x += step
+                    break
+                case 'q':
+                    this.group.position.z -= step
+                    break
+                case 'e':
+                    this.group.position.z += step
+                    break
+            }
         })
     }
 
