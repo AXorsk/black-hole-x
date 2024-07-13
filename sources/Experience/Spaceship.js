@@ -15,10 +15,10 @@ export default class Spaceship
         this.camera = this.experience.camera
 
         this.group = new THREE.Group()
-        this.group.position.x = 0
-        this.group.position.y = 1
-        this.group.position.z = 5
-        this.group.scale.set(0.1, 0.1, 0.1) // 0.01 0.01 0.01
+        // this.group.position.x = 0
+        // this.group.position.y = 1
+        // this.group.position.z = 5
+        this.group.scale.set(0.05, 0.05, 0.05) // 0.1 0.1 0.1
         this.scenes.overlay.add(this.group)
 
         
@@ -30,7 +30,7 @@ export default class Spaceship
 
         this.setDirectionalLight()
         this.setCursor()
-        this.setPosition()
+        // this.setPosition()
         this.setView()
     }
 
@@ -149,8 +149,14 @@ export default class Spaceship
         })
     }
 
-    setPosition()
+    setPosition() // beta
     {
+        window.addEventListener('devicemotion', function(event) {
+            alert("Yes!");
+            const { x, y, z } = event.accelerationIncludingGravity;
+            console.log(`Acceleration: x=${x}, y=${y}, z=${z}`);
+        }, true);
+
         window.addEventListener('keypress', (_event) =>
         {
             var step = 0.01
@@ -202,11 +208,11 @@ export default class Spaceship
         this.view.camera.position.set(0, 0, 2)
         this.view.camera.rotation.copy(this.view.rotation)
 
-        this.group.position.x = - 1
-        this.group.position.y = 1
-        this.group.position.z = Math.sin(this.time.elapsed * 0.5) * 6
+        this.group.position.x = -1
+        this.group.position.y = 0.5
+        this.group.position.z = Math.sin(this.time.elapsed * 0.5) * 10
 
-        this.group.rotation.y = 0.5
+        this.group.rotation.y = -0.2
 
         const centerToSpaceship = this.group.position.clone()
         // centerToSpaceship.normalize()

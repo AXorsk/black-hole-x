@@ -82,13 +82,14 @@ export default class Renderer
                 )
                 .onChange(() =>
                 {
-                    // no traverse ?!
-
-                    // this.scenes.traverse((_child) =>
-                    // {
-                    //     if(_child instanceof THREE.Mesh)
-                    //         _child.material.needsUpdate = true
-                    // })
+                    for (let item in this.scenes)
+                    {
+                        this.scenes[item].traverse((_child) =>
+                        {
+                            if(_child instanceof THREE.Mesh)
+                                _child.material.needsUpdate = true
+                        })
+                    }
                 })
                 
             folder
